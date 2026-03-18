@@ -2,9 +2,12 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- ЗАХИСТ: Content Security Policy блокує виконання шкідливих сторонніх скриптів -->
+    <!-- ІКОНКА САЙТУ -->
+    <link rel="icon" type="image/x-icon" href="MainIcon.ico">
+    
+    <!-- ЗАХИСТ: Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com;">
     
     <title>PC-info-and-History | Неоновий Архів</title>
@@ -12,7 +15,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&display=swap');
 
-        /* Неонова палітра та глобальні змінні */
+        /* Неонова палітра */
         :root {
             --bg-color: #090a0f;
             --text-color: #e0e0e0;
@@ -21,6 +24,7 @@
             --neon-green: #39ff14;
             --neon-purple: #9d00ff;
             --neon-red: #ff0000;
+            --neon-orange: #ff7300;
         }
 
         * {
@@ -37,7 +41,7 @@
             background-image: radial-gradient(circle at 50% 50%, #1a1c29 0%, #090a0f 100%);
             min-height: 100vh;
             display: flex;
-            flex-direction: column; /* Додано для правильного позиціонування футера */
+            flex-direction: column;
         }
 
         /* Навігація */
@@ -46,13 +50,13 @@
             justify-content: center;
             gap: 15px;
             padding: 20px;
-            background: rgba(9, 10, 15, 0.9);
+            background: rgba(9, 10, 15, 0.95);
             border-bottom: 2px solid var(--neon-cyan);
             box-shadow: 0 0 15px var(--neon-cyan);
             position: sticky;
             top: 0;
             z-index: 1000;
-            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
         }
 
         .nav-btn {
@@ -66,6 +70,7 @@
             font-weight: bold;
             border-radius: 5px;
             font-family: inherit;
+            white-space: nowrap;
         }
 
         .nav-btn:hover, .nav-btn.active {
@@ -73,30 +78,32 @@
             color: #000;
             box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
             text-shadow: none;
+            transform: translateY(-2px);
         }
 
-        /* Основний контент */
         .content-wrapper {
-            flex: 1; /* Дозволяє контенту займати весь вільний простір, відсуваючи футер вниз */
+            flex: 1;
+            position: relative;
         }
 
-        /* Сторінки та анімації */
+        /* Плавні анімації сторінок */
         .page {
             display: none;
             padding: 40px 20px;
             max-width: 1200px;
             margin: 0 auto;
-            animation: fadeIn 0.6s ease-out forwards;
             opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
 
         .page.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        .page.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Заголовки */
@@ -128,7 +135,7 @@
             font-size: 1.1em;
         }
 
-        /* Кнопки соцмереж та проектів */
+        /* Кнопки соцмереж */
         .project-links {
             display: flex;
             justify-content: center;
@@ -140,6 +147,7 @@
         .btn-yt, .btn-booster {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             text-decoration: none;
             padding: 15px 30px;
@@ -177,10 +185,10 @@
             transform: translateY(-5px);
         }
 
-        /* Картки для компонентів */
+        /* Картки */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 20px;
         }
@@ -196,37 +204,15 @@
             overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(57,255,20,0.1), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-            opacity: 0;
-        }
-
         .card:hover {
             box-shadow: 0 0 20px var(--neon-green), inset 0 0 10px var(--neon-green);
             transform: translateY(-5px);
         }
 
-        .card:hover::before {
-            opacity: 1;
-            animation: scanline 2s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%) rotate(45deg); }
-            100% { transform: translateY(100%) rotate(45deg); }
-        }
-
-        /* Маркери списків */
         ul { margin-left: 20px; margin-bottom: 15px; }
         li { margin-bottom: 8px; }
         li::marker { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
 
-        /* Елемент кібер-декору */
         .cyber-line {
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
@@ -234,20 +220,13 @@
             box-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        /* Підвал з авторством (Footer) */
         footer {
             text-align: center;
             padding: 25px 20px;
             background: rgba(9, 10, 15, 0.95);
             border-top: 2px solid var(--neon-purple);
             box-shadow: 0 -5px 15px rgba(157, 0, 255, 0.2);
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 1.1em;
-            color: var(--text-color);
+            margin-top: auto;
         }
 
         .author-name {
@@ -258,6 +237,67 @@
             text-transform: uppercase;
         }
 
+        /* =========================================
+           МОБІЛЬНА АДАПТАЦІЯ (Чуйний дизайн)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Перетворюємо навігацію на горизонтальний скрол для телефонів */
+            nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding: 15px 10px;
+                -webkit-overflow-scrolling: touch; /* Плавний скрол на iOS */
+            }
+            
+            nav::-webkit-scrollbar {
+                height: 4px;
+            }
+            nav::-webkit-scrollbar-thumb {
+                background: var(--neon-cyan);
+                border-radius: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            .page {
+                padding: 20px 15px;
+            }
+
+            /* Кнопки соцмереж стають на всю ширину екрану */
+            .project-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-yt, .btn-booster {
+                width: 100%;
+                padding: 12px 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr; /* На телефоні картки йдуть в один стовпець */
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -266,30 +306,28 @@
         <button class="nav-btn active" onclick="showPage('home')">Головна</button>
         <button class="nav-btn" onclick="showPage('history')">Історія ЕОМ</button>
         <button class="nav-btn" onclick="showPage('pc-anatomy')">Анатомія ПК</button>
-        <button class="nav-btn" onclick="showPage('servers')">Архітектура Серверів</button>
+        <button class="nav-btn" onclick="showPage('servers')">Сервери</button>
+        <button class="nav-btn" onclick="showPage('ai-future')">ШІ та Майбутнє</button>
     </nav>
 
     <div class="content-wrapper">
-        <!-- ГОЛОВНА СТОРІНКА -->
-        <main id="home" class="page active">
+        <!-- ГОЛОВНА -->
+        <main id="home" class="page active show">
             <h1>PC-info-and-History</h1>
             <div class="cyber-line"></div>
-            <p>Вітаємо в найбільш детальному архіві комп'ютерних технологій. Цей термінал містить засекречену та відкриту інформацію про еволюцію обчислювальних машин: від перших лампових монстрів до сучасних квантових архітектур та серверних кластерів.</p>
-            <p><strong>Статус системи:</strong> <span style="color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green);">ОНЛАЙН, ЗАХИЩЕНО CSP</span></p>
+            <p>Вітаємо в найбільш детальному архіві комп'ютерних технологій. Цей термінал містить засекречену та відкриту інформацію про еволюцію обчислювальних машин: від перших лампових монстрів до сучасних квантових архітектур та штучного інтелекту.</p>
+            <p><strong>Статус системи:</strong> <span style="color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green);">ОНЛАЙН, АДАПТОВАНО ПІД МОБІЛЬНІ ПРИСТРОЇ</span></p>
             
-            <!-- КНОПКИ YOUTUBE ТА БУСТЕРА -->
             <div class="project-links">
                 <a href="https://www.youtube.com/@CyberCatUA" target="_blank" rel="noopener noreferrer" class="btn-yt">
-                    <!-- Вбудована SVG іконка YouTube -->
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                     Мій YouTube
                 </a>
 
                 <a href="https://jykovs838-ops.github.io/CyberBuster/" target="_blank" rel="noopener noreferrer" class="btn-booster">
-                    <!-- Вбудована SVG іконка блискавки для бустера -->
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                     </svg>
                     CyberBuster
@@ -297,11 +335,12 @@
             </div>
 
             <div class="card" style="border-color: var(--neon-cyan);">
-                <h3 style="color: var(--neon-cyan);">Як користуватися базою даних:</h3>
+                <h3 style="color: var(--neon-cyan);">Навігація Базою Даних:</h3>
                 <ul>
                     <li><strong>Історія ЕОМ:</strong> Дізнайтеся про перші комп'ютери (ENIAC, Altair, Apple I).</li>
-                    <li><strong>Анатомія ПК:</strong> Максимально детальний розбір усіх компонентів (CPU, GPU, VRM, Чипсети).</li>
-                    <li><strong>Сервери:</strong> Чим відрізняється сервер від ПК, системи RAID, пам'ять ECC.</li>
+                    <li><strong>Анатомія ПК:</strong> Максимально детальний розбір усіх компонентів.</li>
+                    <li><strong>Сервери:</strong> Чим відрізняється сервер від ПК, системи RAID.</li>
+                    <li><strong>ШІ та Майбутнє:</strong> Нейромережі, AGI, Квантові комп'ютери та Кібернетика.</li>
                 </ul>
             </div>
         </main>
@@ -310,27 +349,18 @@
         <main id="history" class="page">
             <h1>Еволюція та Історія ПК</h1>
             <div class="cyber-line"></div>
-            
             <div class="grid">
                 <div class="card">
                     <h3>Ера Ламп: ENIAC (1945)</h3>
-                    <p>Electronic Numerical Integrator and Computer — перший універсальний програмований комп'ютер. Важив 27 тонн, споживав 150 кВт енергії та складався з 17 468 вакуумних ламп. Його програмували шляхом фізичного перемикання кабелів.</p>
-                </div>
-                <div class="card">
-                    <h3>Транзисторний прорив (1950-ті)</h3>
-                    <p>Заміна ламп на транзистори зменшила розміри та нагрівання. З'явилася пам'ять на магнітних осердях. IBM 1401 став найпопулярнішим комп'ютером того часу.</p>
+                    <p>Перший універсальний комп'ютер. Важив 27 тонн, споживав 150 кВт енергії та мав 17 468 вакуумних ламп. Його програмували шляхом фізичного перемикання кабелів.</p>
                 </div>
                 <div class="card">
                     <h3>Altair 8800 (1975)</h3>
-                    <p>Перший комерційно успішний мікрокомп'ютер. Не мав ні клавіатури, ні монітора. Програмувався перемикачами на передній панелі (тумблерами), а результати зчитували за миготінням світлодіодів. Для нього Білл Гейтс та Пол Аллен створили BASIC.</p>
-                </div>
-                <div class="card">
-                    <h3>Apple I та Apple II (1976-1977)</h3>
-                    <p>Стів Возняк створив Apple I — плату, до якої вперше можна було підключити звичайну клавіатуру та телевізор. Apple II став справжнім масовим ПК з кольоровою графікою.</p>
+                    <p>Перший комерційно успішний мікрокомп'ютер. Програмувався тумблерами, результати зчитували за миготінням світлодіодів. Для нього Білл Гейтс створив BASIC.</p>
                 </div>
                 <div class="card">
                     <h3>IBM PC 5150 (1981)</h3>
-                    <p>Комп'ютер, що задав стандарт для всієї індустрії (IBM-сумісні ПК). Відкрита архітектура дозволяла іншим компаніям створювати клони і власні компоненти. Використовував процесор Intel 8088 та MS-DOS.</p>
+                    <p>Комп'ютер, що задав стандарт відкритої архітектури для всієї індустрії (IBM-сумісні ПК). Дозволяв іншим компаніям створювати власні компоненти.</p>
                 </div>
             </div>
         </main>
@@ -339,51 +369,27 @@
         <main id="pc-anatomy" class="page">
             <h1>Анатомія та Состав ПК</h1>
             <div class="cyber-line"></div>
-            <p>Детальний розбір компонентів сучасного персонального комп'ютера на мікроархітектурному рівні.</p>
-            
             <div class="grid">
                 <div class="card">
-                    <h3>CPU (Центральний процесор)</h3>
-                    <p>Мозок системи. Сучасні CPU мають мільярди транзисторів.</p>
+                    <h3>CPU (Процесор)</h3>
                     <ul>
-                        <li><strong>ALU (АЛП):</strong> Арифметико-логічний пристрій. Виконує математичні операції.</li>
-                        <li><strong>Кеш (L1, L2, L3):</strong> Надвишвидка пам'ять (SRAM) всередині кристала. L1 — найшвидший, працює на частоті ядра.</li>
-                        <li><strong>CU (Пристрій керування):</strong> Декодує інструкції та керує потоками даних.</li>
+                        <li><strong>ALU (АЛП):</strong> Виконує математичні операції.</li>
+                        <li><strong>Кеш (L1, L2, L3):</strong> Надвишвидка пам'ять всередині кристала.</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>GPU (Відеокарта)</h3>
-                    <p>Графічний процесор. Створений для паралельних обчислень (тисячі дрібних ядер).</p>
                     <ul>
-                        <li><strong>Потокові мультипроцесори (CUDA/RDNA):</strong> Ядра для рендерингу та обчислень.</li>
-                        <li><strong>VRAM (GDDR6/HBM):</strong> Виділена надшвидка пам'ять для текстур.</li>
-                        <li><strong>RT Core / Tensor Core:</strong> Апаратні блоки для трасування променів та штучного інтелекту.</li>
+                        <li><strong>Потокові процесори:</strong> Тисячі ядер для рендерингу.</li>
+                        <li><strong>VRAM:</strong> Виділена надшвидка пам'ять для текстур.</li>
+                        <li><strong>Tensor Core:</strong> Блоки для штучного інтелекту.</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>Motherboard (Материнська плата)</h3>
-                    <p>Нервова система ПК. З'єднує всі компоненти.</p>
                     <ul>
-                        <li><strong>Чипсет:</strong> Мікросхема (наприклад, Z790, B650), що контролює USB, SATA, та повільні лінії PCIe.</li>
-                        <li><strong>VRM (Зона живлення):</strong> Модуль регулювання напруги. Знижує 12V від блоку живлення до ~1V для процесора. Якісний VRM = стабільний розгін.</li>
-                        <li><strong>Шина PCIe:</strong> Високошвидкісні лінії для GPU та NVMe накопичувачів.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Оперативна пам'ять (RAM)</h3>
-                    <p>Тимчасове сховище для даних процесора (DDR4/DDR5).</p>
-                    <ul>
-                        <li><strong>Таймінги (CL):</strong> Затримки в тактах при доступі до пам'яті.</li>
-                        <li><strong>Двоканальний режим:</strong> Збільшує пропускну здатність вдвічі завдяки паралельному доступу до двох модулів.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Сховище даних (SSD / NVMe)</h3>
-                    <p>Еволюція від магнітних дисків (HDD) до флеш-пам'яті (NAND).</p>
-                    <ul>
-                        <li><strong>NAND Flash:</strong> Комірки пам'яті (SLC, MLC, TLC, QLC). SLC найдовговічніша.</li>
-                        <li><strong>Контролер:</strong> Міні-процесор всередині SSD, що розподіляє знос комірок.</li>
-                        <li><strong>Протокол NVMe:</strong> Дозволяє SSD спілкуватися безпосередньо з CPU через шину PCIe, досягаючи швидкостей понад 7000 МБ/с.</li>
+                        <li><strong>VRM:</strong> Знижує 12V від блоку живлення до ~1V для процесора. Якісний VRM = стабільний розгін.</li>
+                        <li><strong>Шина PCIe:</strong> Високошвидкісні магістралі для даних.</li>
                     </ul>
                 </div>
             </div>
@@ -391,77 +397,109 @@
 
         <!-- СЕРВЕРИ -->
         <main id="servers" class="page">
-            <h1>Архітектура Серверів та Дата-центрів</h1>
+            <h1>Архітектура Серверів</h1>
             <div class="cyber-line"></div>
-            <p>Сервери — це промислові комп'ютери, створені для роботи 24/7/365. Їхня головна мета — відмовостійкість та обробка масивів даних.</p>
-
             <div class="grid">
                 <div class="card" style="border-color: var(--neon-purple);">
-                    <h3 style="color: var(--neon-purple);">Форм-фактори серверів</h3>
+                    <h3 style="color: var(--neon-purple);">Відмовостійкість</h3>
                     <ul>
-                        <li><strong>Rack (Стійкові):</strong> Монтуються в серверні шафи (юніти, 1U, 2U, 4U).</li>
-                        <li><strong>Blade (Леза):</strong> Надкомпактні плати без власного живлення, вставляються в єдине шасі (корзину) з загальним охолодженням і живленням.</li>
-                        <li><strong>Tower (Баштові):</strong> Схожі на звичайні ПК, для малих офісів.</li>
-                    </ul>
-                </div>
-                <div class="card" style="border-color: var(--neon-purple);">
-                    <h3 style="color: var(--neon-purple);">Відмовостійкість (Redundancy)</h3>
-                    <p>Якщо одна деталь ламається, сервер не вимикається:</p>
-                    <ul>
-                        <li><strong>Резервні Блоки Живлення:</strong> Зазвичай 2 або 4. Якщо один згорає, інший миттєво бере навантаження.</li>
-                        <li><strong>Гаряча заміна (Hot-Swap):</strong> Диски та вентилятори можна витягувати та замінювати прямо під час роботи системи.</li>
+                        <li><strong>Резервні БЖ:</strong> Якщо один згорає, інший бере навантаження.</li>
+                        <li><strong>Hot-Swap (Гаряча заміна):</strong> Диски можна замінювати прямо під час роботи.</li>
                     </ul>
                 </div>
                 <div class="card" style="border-color: var(--neon-purple);">
                     <h3 style="color: var(--neon-purple);">Серверні компоненти</h3>
                     <ul>
-                        <li><strong>ECC RAM:</strong> Оперативна пам'ять з корекцією помилок. Знаходить і виправляє бітові помилки (від космічної радіації чи нагріву), щоб система не зависла.</li>
-                        <li><strong>Багатопроцесорність:</strong> Материнські плати з 2, 4 або навіть 8 сокетами під процесори (напр. Intel Xeon, AMD EPYC).</li>
-                        <li><strong>RAID масиви:</strong> Об'єднання жорстких дисків. RAID 1 дублює інформацію, RAID 5 та 6 дозволяють втратити диски без втрати даних завдяки "контрольним сумам" (Parity).</li>
+                        <li><strong>ECC RAM:</strong> Пам'ять з корекцією помилок (від радіації чи нагріву).</li>
+                        <li><strong>IPMI:</strong> Віддалене управління комп'ютером на апаратному рівні.</li>
+                        <li><strong>RAID:</strong> Об'єднання дисків для захисту від втрати даних.</li>
                     </ul>
                 </div>
-                <div class="card" style="border-color: var(--neon-purple);">
-                    <h3 style="color: var(--neon-purple);">BMC / IPMI (Віддалене управління)</h3>
-                    <p>Спеціальний мікрокомп'ютер на серверній материнській платі зі своїм мережевим портом. Дозволяє системному адміністратору включати, виключати сервер, або перевстановлювати Windows/Linux з іншого кінця світу, навіть якщо основна система зависла або вимкнена.</p>
+            </div>
+        </main>
+
+        <!-- НОВА СТОРІНКА: ШІ ТА МАЙБУТНЄ -->
+        <main id="ai-future" class="page">
+            <h1>Штучний Інтелект та Майбутнє</h1>
+            <div class="cyber-line"></div>
+            <p>Технології переходять на новий етап розвитку. Від кремнієвих транзисторів людство рухається до нейронних мереж, квантових кубітів та симбіозу з машинами.</p>
+            
+            <div class="grid">
+                <!-- Картка 1: Види ШІ -->
+                <div class="card" style="border-color: var(--neon-orange);">
+                    <h3 style="color: var(--neon-orange);">Еволюція ШІ (AI)</h3>
+                    <ul>
+                        <li><strong>ANI (Вузький ШІ):</strong> Те, що є зараз (ChatGPT, алгоритми автопілота Tesla). Вміє геніально робити лише конкретні задачі, але не має самосвідомості.</li>
+                        <li><strong>AGI (Загальний ШІ):</strong> Машина, чий інтелект дорівнює людському у <i>всіх</i> сферах. Наразі в розробці.</li>
+                        <li><strong>ASI (Суперінтелект):</strong> ШІ, який перевершує інтелект усього людства разом узятого. Межа технологічної сингулярності.</li>
+                    </ul>
+                </div>
+
+                <!-- Картка 2: Нейромережі -->
+                <div class="card" style="border-color: var(--neon-orange);">
+                    <h3 style="color: var(--neon-orange);">Як працюють Нейромережі</h3>
+                    <p>Вони імітують роботу людського мозку (нейрони та синапси). Машина не просто зберігає базу даних, вона <i>навчається</i> знаходити закономірності (Патерни).</p>
+                    <ul>
+                        <li><strong>LLM:</strong> (Великі мовні моделі). Передбачають наступне слово на основі мільярдів прочитаних текстів.</li>
+                        <li><strong>Генеративні (GAN):</strong> Змагальні мережі, де один алгоритм малює картинку, а інший критикує її, поки вона не стане ідеальною (Midjourney).</li>
+                    </ul>
+                </div>
+
+                <!-- Картка 3: Квантові ПК (Від автора) -->
+                <div class="card" style="border-color: var(--neon-cyan);">
+                    <h3 style="color: var(--neon-cyan);">Квантові Комп'ютери (Майбутнє)</h3>
+                    <p>Звичайний ПК використовує Біти (0 або 1). Квантовий використовує <strong>Кубіти</strong>, які завдяки квантовій суперпозиції можуть бути і 0, і 1 <i>одночасно</i>.</p>
+                    <p><strong>Що це дасть:</strong> Здатність зламати будь-який сучасний криптографічний пароль за лічені секунди, відкриття нових ліків на молекулярному рівні та миттєве навчання ШІ.</p>
+                </div>
+
+                <!-- Картка 4: Кібернетика -->
+                <div class="card" style="border-color: var(--neon-pink);">
+                    <h3 style="color: var(--neon-pink);">Кібернетика та Neuralink</h3>
+                    <p>Злиття біології та цифрових систем (Кіборгізація). Інтерфейси "Мозок-Комп'ютер" (BCI) вже дозволяють людям керувати курсором миші, грати в ігри або друкувати текст виключно силою думки.</p>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ФУТЕР (ПІДВАЛ) З АВТОРСТВОМ -->
+    <!-- ФУТЕР -->
     <footer>
         <p>Розроблено та створено: <span class="author-name">Cyber Cat UA</span> &copy; 2026</p>
     </footer>
 
-    <!-- СКРИПТ АНІМАЦІЇ ТА НАВІГАЦІЇ -->
+    <!-- ПЛАВНА АНІМАЦІЯ ТА СКРИПТ (БЕЗ БАГІВ) -->
     <script>
-        // Функція для перемикання сторінок (SPA логіка)
         function showPage(pageId) {
-            // Ховаємо всі сторінки
             const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-
-            // Знімаємо підсвітку з усіх кнопок
             const btns = document.querySelectorAll('.nav-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('active');
+            const targetPage = document.getElementById(pageId);
+
+            // Якщо ми вже на цій сторінці - нічого не робимо
+            if (targetPage.classList.contains('show')) return;
+
+            // Знімаємо активний статус з кнопок
+            btns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`button[onclick="showPage('${pageId}')"]`).classList.add('active');
+
+            // 1. Плавно приховуємо всі поточні сторінки
+            pages.forEach(page => {
+                if (page.classList.contains('show')) {
+                    page.classList.remove('show');
+                    // 2. Чекаємо поки закінчиться анімація зникнення (0.4с = 400мс)
+                    setTimeout(() => {
+                        page.classList.remove('active');
+                    }, 400); 
+                }
             });
 
-            // Показуємо потрібну сторінку та перезапускаємо анімацію
-            const targetPage = document.getElementById(pageId);
-            targetPage.classList.remove('active');
-            // Невеликий хак для перезапуску CSS анімації
-            void targetPage.offsetWidth; 
-            targetPage.classList.add('active');
-
-            // Підсвічуємо активну кнопку
-            const activeBtn = document.querySelector(`button[onclick="showPage('${pageId}')"]`);
-            if(activeBtn) activeBtn.classList.add('active');
-            
-            // Скролимо плавно наверх
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // 3. Плавно показуємо нову сторінку
+            setTimeout(() => {
+                targetPage.classList.add('active');
+                // Невелика затримка (50мс) для того, щоб браузер встиг застосувати 'active' (display:block)
+                setTimeout(() => {
+                    targetPage.classList.add('show');
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Скрол наверх
+                }, 50);
+            }, 400); // Починаємо після зникнення старої
         }
     </script>
 </body>
