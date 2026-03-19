@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- ІКОНКА САЙТУ -->
     <link rel="icon" type="image/x-icon" href="MainIcon.ico">
     
-    <!-- ЗАХИСТ: Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; object-src 'none'; frame-ancestors 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     
     <title>PC-info-and-History | Неоновий Архів</title>
     
@@ -241,62 +240,54 @@
            МОБІЛЬНА АДАПТАЦІЯ (Чуйний дизайн)
            ========================================= */
         @media (max-width: 768px) {
-            /* Перетворюємо навігацію на горизонтальний скрол для телефонів */
             nav {
                 justify-content: flex-start;
                 overflow-x: auto;
                 padding: 15px 10px;
-                -webkit-overflow-scrolling: touch; /* Плавний скрол на iOS */
+                -webkit-overflow-scrolling: touch;
             }
-            
-            nav::-webkit-scrollbar {
-                height: 4px;
-            }
+            nav::-webkit-scrollbar { height: 4px; }
             nav::-webkit-scrollbar-thumb {
                 background: var(--neon-cyan);
                 border-radius: 10px;
             }
+            .nav-btn { padding: 8px 15px; font-size: 0.9em; }
+            h1 { font-size: 1.8em; margin-bottom: 20px; }
+            h2 { font-size: 1.4em; }
+            p { font-size: 1em; }
+            .page { padding: 20px 15px; }
+            .project-links { flex-direction: column; gap: 15px; }
+            .btn-yt, .btn-booster { width: 100%; padding: 12px 20px; }
+            .grid { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+        }
 
-            .nav-btn {
-                padding: 8px 15px;
-                font-size: 0.9em;
-            }
-
-            h1 {
-                font-size: 1.8em;
-                margin-bottom: 20px;
-            }
-
-            h2 {
-                font-size: 1.4em;
-            }
-
-            p {
-                font-size: 1em;
-            }
-
-            .page {
-                padding: 20px 15px;
-            }
-
-            /* Кнопки соцмереж стають на всю ширину екрану */
-            .project-links {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn-yt, .btn-booster {
-                width: 100%;
-                padding: 12px 20px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr; /* На телефоні картки йдуть в один стовпець */
-            }
-
-            .card {
-                padding: 20px;
-            }
+        /* =========================================
+           СТИЛІ ОФЛАЙН ЕКРАНУ (CYBER CAT)
+           ========================================= */
+        #offline-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(9, 10, 15, 0.98);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        #offline-screen h1 { color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); margin-bottom: 10px; }
+        #game-canvas {
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            background: #000;
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .offline-stats {
+            margin-top: 15px;
+            font-size: 1.5em;
+            color: var(--neon-green);
         }
     </style>
 </head>
@@ -311,7 +302,6 @@
     </nav>
 
     <div class="content-wrapper">
-        <!-- ГОЛОВНА -->
         <main id="home" class="page active show">
             <h1>PC-info-and-History</h1>
             <div class="cyber-line"></div>
@@ -345,7 +335,6 @@
             </div>
         </main>
 
-        <!-- ІСТОРІЯ ЕОМ -->
         <main id="history" class="page">
             <h1>Еволюція та Історія ПК</h1>
             <div class="cyber-line"></div>
@@ -362,10 +351,17 @@
                     <h3>IBM PC 5150 (1981)</h3>
                     <p>Комп'ютер, що задав стандарт відкритої архітектури для всієї індустрії (IBM-сумісні ПК). Дозволяв іншим компаніям створювати власні компоненти.</p>
                 </div>
+                <div class="card">
+                    <h3>Apple Macintosh (1984)</h3>
+                    <p>Перший масовий комп'ютер з графічним інтерфейсом користувача (GUI) та мишею. Зробив революцію, показавши, що ПК можуть бути не лише для програмістів.</p>
+                </div>
+                <div class="card">
+                    <h3>Ера Хмар та Мобільності (2000+)</h3>
+                    <p>Перехід від локальних обчислень до розподілених мереж. Поява смартфонів, які перевершують за потужністю суперкомп'ютери 90-х років, та хмарних сервісів (AWS, Google Cloud).</p>
+                </div>
             </div>
         </main>
 
-        <!-- АНАТОМІЯ ПК -->
         <main id="pc-anatomy" class="page">
             <h1>Анатомія та Состав ПК</h1>
             <div class="cyber-line"></div>
@@ -392,10 +388,23 @@
                         <li><strong>Шина PCIe:</strong> Високошвидкісні магістралі для даних.</li>
                     </ul>
                 </div>
+                <div class="card">
+                    <h3>RAM (Оперативна пам'ять)</h3>
+                    <ul>
+                        <li><strong>Тимчасовий буфер:</strong> Зберігає дані, необхідні процесору прямо зараз.</li>
+                        <li><strong>DDR:</strong> Double Data Rate - передача даних двічі за один такт. Зникає при вимкненні живлення.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Накопичувачі (SSD/NVMe vs HDD)</h3>
+                    <ul>
+                        <li><strong>HDD:</strong> Механічні диски. Повільні, але надійні для архівування.</li>
+                        <li><strong>NVMe SSD:</strong> Твердотільні накопичувачі, що працюють через шину PCIe. Швидкість читання сягає до 14 000 МБ/с.</li>
+                    </ul>
+                </div>
             </div>
         </main>
 
-        <!-- СЕРВЕРИ -->
         <main id="servers" class="page">
             <h1>Архітектура Серверів</h1>
             <div class="cyber-line"></div>
@@ -415,17 +424,22 @@
                         <li><strong>RAID:</strong> Об'єднання дисків для захисту від втрати даних.</li>
                     </ul>
                 </div>
+                <div class="card" style="border-color: var(--neon-purple);">
+                    <h3 style="color: var(--neon-purple);">Віртуалізація (Hypervisor)</h3>
+                    <ul>
+                        <li><strong>Type 1 (Bare-Metal):</strong> ПЗ, що ставиться прямо на залізо (VMware ESXi, Proxmox), дозволяючи запускати десятки віртуальних машин на одному фізичному сервері.</li>
+                        <li><strong>Ізоляція:</strong> Якщо одна ВМ "падає" або заражена вірусом, інші продовжують працювати.</li>
+                    </ul>
+                </div>
             </div>
         </main>
 
-        <!-- НОВА СТОРІНКА: ШІ ТА МАЙБУТНЄ -->
         <main id="ai-future" class="page">
             <h1>Штучний Інтелект та Майбутнє</h1>
             <div class="cyber-line"></div>
             <p>Технології переходять на новий етап розвитку. Від кремнієвих транзисторів людство рухається до нейронних мереж, квантових кубітів та симбіозу з машинами.</p>
             
             <div class="grid">
-                <!-- Картка 1: Види ШІ -->
                 <div class="card" style="border-color: var(--neon-orange);">
                     <h3 style="color: var(--neon-orange);">Еволюція ШІ (AI)</h3>
                     <ul>
@@ -435,7 +449,6 @@
                     </ul>
                 </div>
 
-                <!-- Картка 2: Нейромережі -->
                 <div class="card" style="border-color: var(--neon-orange);">
                     <h3 style="color: var(--neon-orange);">Як працюють Нейромережі</h3>
                     <p>Вони імітують роботу людського мозку (нейрони та синапси). Машина не просто зберігає базу даних, вона <i>навчається</i> знаходити закономірності (Патерни).</p>
@@ -445,14 +458,17 @@
                     </ul>
                 </div>
 
-                <!-- Картка 3: Квантові ПК (Від автора) -->
                 <div class="card" style="border-color: var(--neon-cyan);">
                     <h3 style="color: var(--neon-cyan);">Квантові Комп'ютери (Майбутнє)</h3>
                     <p>Звичайний ПК використовує Біти (0 або 1). Квантовий використовує <strong>Кубіти</strong>, які завдяки квантовій суперпозиції можуть бути і 0, і 1 <i>одночасно</i>.</p>
                     <p><strong>Що це дасть:</strong> Здатність зламати будь-який сучасний криптографічний пароль за лічені секунди, відкриття нових ліків на молекулярному рівні та миттєве навчання ШІ.</p>
                 </div>
 
-                <!-- Картка 4: Кібернетика -->
+                <div class="card" style="border-color: var(--neon-green);">
+                    <h3 style="color: var(--neon-green);">Квантова Криптографія (Firewall Майбутнього)</h3>
+                    <p>Відповідь на загрозу зламу паролів. Заснована на законах фізики: будь-яка спроба третьої сторони "підслухати" передачу квантового ключа миттєво змінює його стан. Це робить такий кібер-захист абсолютно невразливим до перехоплення.</p>
+                </div>
+
                 <div class="card" style="border-color: var(--neon-pink);">
                     <h3 style="color: var(--neon-pink);">Кібернетика та Neuralink</h3>
                     <p>Злиття біології та цифрових систем (Кіборгізація). Інтерфейси "Мозок-Комп'ютер" (BCI) вже дозволяють людям керувати курсором миші, грати в ігри або друкувати текст виключно силою думки.</p>
@@ -461,45 +477,186 @@
         </main>
     </div>
 
-    <!-- ФУТЕР -->
     <footer>
         <p>Розроблено та створено: <span class="author-name">Cyber Cat UA</span> &copy; 2026</p>
     </footer>
 
-    <!-- ПЛАВНА АНІМАЦІЯ ТА СКРИПТ (БЕЗ БАГІВ) -->
+    <div id="offline-screen">
+        <h1>CONNECTION LOST</h1>
+        <p style="margin-bottom: 20px;">Kernel Panic. Запускаю Cyber Cat Emergency Protocol...</p>
+        <p style="color: var(--neon-cyan); margin-bottom: 10px;">[Натисни SPACE або Торкнись екрану для стрибка]</p>
+        <canvas id="game-canvas" width="600" height="200"></canvas>
+        <div class="offline-stats">GEMS: <span id="cat-score">0</span></div>
+    </div>
+
     <script>
+        // --- Логіка перемикання сторінок (Твоя оригінальна) ---
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             const btns = document.querySelectorAll('.nav-btn');
             const targetPage = document.getElementById(pageId);
 
-            // Якщо ми вже на цій сторінці - нічого не робимо
             if (targetPage.classList.contains('show')) return;
 
-            // Знімаємо активний статус з кнопок
             btns.forEach(btn => btn.classList.remove('active'));
             document.querySelector(`button[onclick="showPage('${pageId}')"]`).classList.add('active');
 
-            // 1. Плавно приховуємо всі поточні сторінки
             pages.forEach(page => {
                 if (page.classList.contains('show')) {
                     page.classList.remove('show');
-                    // 2. Чекаємо поки закінчиться анімація зникнення (0.4с = 400мс)
                     setTimeout(() => {
                         page.classList.remove('active');
                     }, 400); 
                 }
             });
 
-            // 3. Плавно показуємо нову сторінку
             setTimeout(() => {
                 targetPage.classList.add('active');
-                // Невелика затримка (50мс) для того, щоб браузер встиг застосувати 'active' (display:block)
                 setTimeout(() => {
                     targetPage.classList.add('show');
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Скрол наверх
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
                 }, 50);
-            }, 400); // Починаємо після зникнення старої
+            }, 400); 
+        }
+
+        // --- ЗАХИСТ: Попередження в консолі ---
+        console.log("%cУВАГА!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px 0 #000;");
+        console.log("%cЦе закритий архів. Будь-які маніпуляції з кодом фіксуються системою Cyber Buster.", "color: #00f3ff; font-size: 16px;");
+
+        // --- CYBER CAT: Логіка Офлайн Гри з Анти-Чітом ---
+        const GameEngine = (function() {
+            // Приватні змінні (Анти-Чіт)
+            let _score = 0;
+            let _isActive = false;
+            let _animationId;
+            
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreDisplay = document.getElementById('cat-score');
+
+            // Ігрові об'єкти
+            let cat = { x: 50, y: 150, width: 20, height: 20, dy: 0, isJumping: false };
+            let obstacle = { x: 600, y: 150, width: 20, height: 20, speed: 5 };
+            let gem = { x: 800, y: 100, active: true };
+            const gravity = 0.6;
+
+            function jump() {
+                if (!cat.isJumping && _isActive) {
+                    cat.dy = -10;
+                    cat.isJumping = true;
+                }
+            }
+
+            function drawBackground() {
+                ctx.fillStyle = 'rgba(0, 50, 0, 0.2)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // "Матричний" дощ на тлі
+                ctx.fillStyle = '#0F0';
+                ctx.font = '10px monospace';
+                for(let i = 0; i < 5; i++) {
+                    ctx.fillText(Math.round(Math.random()), Math.random() * canvas.width, Math.random() * canvas.height);
+                }
+            }
+
+            function update() {
+                if (!_isActive) return;
+
+                // Фізика Кота
+                cat.y += cat.dy;
+                if (cat.y < 150) {
+                    cat.dy += gravity;
+                } else {
+                    cat.y = 150;
+                    cat.dy = 0;
+                    cat.isJumping = false;
+                }
+
+                // Перешкода (Вірус)
+                obstacle.x -= obstacle.speed;
+                if (obstacle.x < -20) {
+                    obstacle.x = 600 + Math.random() * 200;
+                    obstacle.speed += 0.1; // Адаптивна складність
+                }
+
+                // Гем (Енергія)
+                gem.x -= 3;
+                if (gem.x < -10) {
+                    gem.x = 600 + Math.random() * 300;
+                    gem.active = true;
+                }
+
+                // Перевірка зіткнення з Гемом (Безпечне додавання)
+                if (gem.active && Math.abs(cat.x - gem.x) < 25 && Math.abs(cat.y - gem.y) < 25) {
+                    gem.active = false;
+                    _score += 10;
+                    scoreDisplay.innerText = _score;
+                }
+
+                // Перевірка зіткнення з Вірусом (Game Over)
+                if (cat.x < obstacle.x + obstacle.width && cat.x + cat.width > obstacle.x &&
+                    cat.y < obstacle.y + obstacle.height && cat.y + cat.height > obstacle.y) {
+                    _isActive = false;
+                    ctx.fillStyle = "rgba(255, 0, 0, 0.7)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = "#FFF";
+                    ctx.font = "20px monospace";
+                    ctx.fillText("SYSTEM BREACH. Click to Reboot.", 120, 100);
+                    return;
+                }
+
+                // Малювання
+                drawBackground();
+                
+                // Малюємо Кота (Неоновий куб з глітчем)
+                ctx.fillStyle = '#00f3ff';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00f3ff';
+                ctx.fillRect(cat.x, cat.y + (Math.random() > 0.9 ? 2 : 0), cat.width, cat.height);
+                ctx.shadowBlur = 0;
+
+                // Малюємо Вірус (Червоний код)
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+
+                // Малюємо Гем
+                if (gem.active) {
+                    ctx.fillStyle = '#39ff14';
+                    ctx.fillRect(gem.x, gem.y, 10, 10);
+                }
+
+                _animationId = requestAnimationFrame(update);
+            }
+
+            function resetGame() {
+                cat.y = 150;
+                obstacle.x = 600;
+                obstacle.speed = 5;
+                gem.x = 800;
+                _score = 0;
+                scoreDisplay.innerText = _score;
+                _isActive = true;
+                cancelAnimationFrame(_animationId);
+                update();
+            }
+
+            // Управління
+            window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
+            canvas.addEventListener('touchstart', jump);
+            canvas.addEventListener('click', () => { if(!_isActive) resetGame(); });
+
+            return {
+                start: () => { document.getElementById('offline-screen').style.display = 'flex'; resetGame(); },
+                stop: () => { document.getElementById('offline-screen').style.display = 'none'; _isActive = false; }
+            };
+        })();
+
+        // --- Детектор підключення до мережі ---
+        window.addEventListener('offline', GameEngine.start);
+        window.addEventListener('online', GameEngine.stop);
+
+        // Якщо завантажили сайт і одразу немає інтернету (кеш)
+        if (!navigator.onLine) {
+            GameEngine.start();
         }
     </script>
 </body>
