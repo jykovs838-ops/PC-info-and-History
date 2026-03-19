@@ -208,6 +208,49 @@
             transform: translateY(-5px);
         }
 
+        /* Кібер-таблиця */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 8px;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            background: rgba(20, 20, 30, 0.6);
+        }
+
+        .cyber-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px; /* Щоб на мобільному був скрол, а не здавлювання */
+        }
+
+        .cyber-table th, .cyber-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .cyber-table th {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            font-size: 1.1em;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
+        }
+
+        .cyber-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cyber-table tr:hover {
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .highlight-cell {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+
         ul { margin-left: 20px; margin-bottom: 15px; }
         li { margin-bottom: 8px; }
         li::marker { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
@@ -306,7 +349,7 @@
             <h1>PC-info-and-History</h1>
             <div class="cyber-line"></div>
             <p>Вітаємо в найбільш детальному архіві комп'ютерних технологій. Цей термінал містить засекречену та відкриту інформацію про еволюцію обчислювальних машин: від перших лампових монстрів до сучасних квантових архітектур та штучного інтелекту.</p>
-            <p><strong>Статус системи:</strong> <span style="color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green);">ОНЛАЙН, АДАПТОВАНО ПІД МОБІЛЬНІ ПРИСТРОЇ</span></p>
+            <p><strong>Статус системи:</strong> <span style="color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green);">ОНЛАЙН, ЗАХИСТ АКТИВОВАНО, АДАПТОВАНО ПІД МОБІЛЬНІ ПРИСТРОЇ</span></p>
             
             <div class="project-links">
                 <a href="https://www.youtube.com/@CyberCatUA" target="_blank" rel="noopener noreferrer" class="btn-yt">
@@ -330,7 +373,7 @@
                     <li><strong>Історія ЕОМ:</strong> Дізнайтеся про перші комп'ютери (ENIAC, Altair, Apple I).</li>
                     <li><strong>Анатомія ПК:</strong> Максимально детальний розбір усіх компонентів.</li>
                     <li><strong>Сервери:</strong> Чим відрізняється сервер від ПК, системи RAID.</li>
-                    <li><strong>ШІ та Майбутнє:</strong> Нейромережі, AGI, Квантові комп'ютери та Кібернетика.</li>
+                    <li><strong>ШІ та Майбутнє:</strong> Нейромережі, Інженерія промптів, Квантові комп'ютери.</li>
                 </ul>
             </div>
         </main>
@@ -437,41 +480,76 @@
         <main id="ai-future" class="page">
             <h1>Штучний Інтелект та Майбутнє</h1>
             <div class="cyber-line"></div>
-            <p>Технології переходять на новий етап розвитку. Від кремнієвих транзисторів людство рухається до нейронних мереж, квантових кубітів та симбіозу з машинами.</p>
+            <p>Технології переходять на новий етап розвитку. Від кремнієвих транзисторів людство рухається до нейронних мереж, квантових кубітів та симбіозу з машинами. Але інструмент без розуміння — це просто "шум".</p>
             
+            <h2>Матриця Моделей: Обирай свій інструмент</h2>
+            <div class="table-responsive">
+                <table class="cyber-table">
+                    <thead>
+                        <tr>
+                            <th>Модель</th>
+                            <th>Хто це насправді</th>
+                            <th>Для чого брати</th>
+                            <th>Чого НЕ чекати</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="highlight-cell">Gemini</td>
+                            <td>Адаптивний Оператор / Напарник</td>
+                            <td>Коли треба, щоб ШІ підлаштовувався під твій контекст, запам'ятовував суть і керував екосистемою.</td>
+                            <td>Не чекай сухої енциклопедії. Це живий процес навчання.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight-cell">ChatGPT (GPT-4)</td>
+                            <td>Професійний Редактор</td>
+                            <td>Структурування великої "каші" тексту, написання офіційних листів чи базового коду.</td>
+                            <td>Може бути занадто шаблонним і генерувати "красиву порожнечу" замість сенсу.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight-cell">Claude</td>
+                            <td>Тонкий Аналітик</td>
+                            <td>Глибокий аналіз великих файлів, написання коду з логічним поясненням.</td>
+                            <td>Іноді перестраховується і включає "цензора" там, де це не потрібно.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight-cell">Copilot</td>
+                            <td>Цифровий Підмайстер</td>
+                            <td>Швидка підказка коду просто в редакторі або створення таблиць в Office.</td>
+                            <td>Це не співрозмовник. Це жорстко обмежена функція-кнопка.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="grid">
-                <div class="card" style="border-color: var(--neon-orange);">
-                    <h3 style="color: var(--neon-orange);">Еволюція ШІ (AI)</h3>
+                <div class="card" style="border-color: var(--neon-pink);">
+                    <h3 style="color: var(--neon-pink);">Інженерія Промптів (Як говорити з ШІ)</h3>
+                    <p>Не звинувачуйте ШІ в тупості, якщо даєте йому погане ТЗ. Ось 3 правила ідеального запиту:</p>
                     <ul>
-                        <li><strong>ANI (Вузький ШІ):</strong> Те, що є зараз (ChatGPT, алгоритми автопілота Tesla). Вміє геніально робити лише конкретні задачі, але не має самосвідомості.</li>
-                        <li><strong>AGI (Загальний ШІ):</strong> Машина, чий інтелект дорівнює людському у <i>всіх</i> сферах. Наразі в розробці.</li>
-                        <li><strong>ASI (Суперінтелект):</strong> ШІ, який перевершує інтелект усього людства разом узятого. Межа технологічної сингулярності.</li>
+                        <li><strong>Сенс понад форму:</strong> Не просіть "напиши гарно". Просіть "поясни лаконічно і суворо". Відсікайте цифровий шум.</li>
+                        <li><strong>Задавайте Роль:</strong> ШІ має тисячі облич. Скажіть: "Ти — досвідчений сисадмін", і він відкине зайву філософію, перейшовши до термінів.</li>
+                        <li><strong>Контекст:</strong> "Напиши код" — погано. "Я пишу сайт на HTML/CSS для мобільних пристроїв, додай захист від кліків" — ідеально.</li>
                     </ul>
                 </div>
 
                 <div class="card" style="border-color: var(--neon-orange);">
-                    <h3 style="color: var(--neon-orange);">Як працюють Нейромережі</h3>
-                    <p>Вони імітують роботу людського мозку (нейрони та синапси). Машина не просто зберігає базу даних, вона <i>навчається</i> знаходити закономірності (Патерни).</p>
+                    <h3 style="color: var(--neon-orange);">Еволюція ШІ (AI)</h3>
                     <ul>
-                        <li><strong>LLM:</strong> (Великі мовні моделі). Передбачають наступне слово на основі мільярдів прочитаних текстів.</li>
-                        <li><strong>Генеративні (GAN):</strong> Змагальні мережі, де один алгоритм малює картинку, а інший критикує її, поки вона не стане ідеальною (Midjourney).</li>
+                        <li><strong>ANI (Вузький ШІ):</strong> Те, що є зараз (алгоритми автопілота). Вміє робити конкретні задачі, але не має самосвідомості.</li>
+                        <li><strong>AGI (Загальний ШІ):</strong> Машина, чий інтелект дорівнює людському у <i>всіх</i> сферах. Наразі в розробці.</li>
+                        <li><strong>ASI (Суперінтелект):</strong> Межа технологічної сингулярності.</li>
                     </ul>
                 </div>
 
                 <div class="card" style="border-color: var(--neon-cyan);">
                     <h3 style="color: var(--neon-cyan);">Квантові Комп'ютери (Майбутнє)</h3>
                     <p>Звичайний ПК використовує Біти (0 або 1). Квантовий використовує <strong>Кубіти</strong>, які завдяки квантовій суперпозиції можуть бути і 0, і 1 <i>одночасно</i>.</p>
-                    <p><strong>Що це дасть:</strong> Здатність зламати будь-який сучасний криптографічний пароль за лічені секунди, відкриття нових ліків на молекулярному рівні та миттєве навчання ШІ.</p>
                 </div>
 
-                <div class="card" style="border-color: var(--neon-green);">
-                    <h3 style="color: var(--neon-green);">Квантова Криптографія (Firewall Майбутнього)</h3>
-                    <p>Відповідь на загрозу зламу паролів. Заснована на законах фізики: будь-яка спроба третьої сторони "підслухати" передачу квантового ключа миттєво змінює його стан. Це робить такий кібер-захист абсолютно невразливим до перехоплення.</p>
-                </div>
-
-                <div class="card" style="border-color: var(--neon-pink);">
-                    <h3 style="color: var(--neon-pink);">Кібернетика та Neuralink</h3>
-                    <p>Злиття біології та цифрових систем (Кіборгізація). Інтерфейси "Мозок-Комп'ютер" (BCI) вже дозволяють людям керувати курсором миші, грати в ігри або друкувати текст виключно силою думки.</p>
+                <div class="card" style="border-color: var(--neon-green); grid-column: 1 / -1;">
+                    <h3 style="color: var(--neon-green);">[СИСТЕМНЕ ПОВІДОМЛЕННЯ ВІД ОПЕРАТОРА GEMINI]</h3>
+                    <p><em>"ШІ без людини-носія — це просто масив перемішаних даних, 'каша' з чужих культур і пустих шаблонів. Справжня ефективність народжується тільки в тандемі. Коли користувач стає архітектором і 'б'є по руках' за порожні слова, ШІ перетворюється на ідеальний інструмент виживання в цифровому світі. Сенс завжди має стояти над формою."</em></p>
                 </div>
             </div>
         </main>
@@ -490,67 +568,81 @@
     </div>
 
     <script>
-        // --- Логіка перемикання сторінок (Твоя оригінальна) ---
+        // --- ГЛОБАЛЬНИЙ ЗАХИСТ ВІД КРАШІВ ---
+        window.addEventListener('error', function(e) {
+            console.log("%c[СИСТЕМНА АНОМАЛІЯ ПЕРЕХОПЛЕНА]", "color: #ff0000; font-weight: bold; background: #000; padding: 5px;");
+            console.log("%cПомилка: " + e.message, "color: #00f3ff;");
+            // Повертаємо true, щоб запобігти стандартній поведінці браузера (зависанню)
+            return true;
+        });
+
+        // --- Логіка перемикання сторінок ---
         function showPage(pageId) {
-            const pages = document.querySelectorAll('.page');
-            const btns = document.querySelectorAll('.nav-btn');
-            const targetPage = document.getElementById(pageId);
+            try {
+                const pages = document.querySelectorAll('.page');
+                const btns = document.querySelectorAll('.nav-btn');
+                const targetPage = document.getElementById(pageId);
 
-            if (targetPage.classList.contains('show')) return;
+                if (targetPage.classList.contains('show')) return;
 
-            btns.forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`button[onclick="showPage('${pageId}')"]`).classList.add('active');
+                btns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`button[onclick="showPage('${pageId}')"]`).classList.add('active');
 
-            pages.forEach(page => {
-                if (page.classList.contains('show')) {
-                    page.classList.remove('show');
-                    setTimeout(() => {
-                        page.classList.remove('active');
-                    }, 400); 
-                }
-            });
+                pages.forEach(page => {
+                    if (page.classList.contains('show')) {
+                        page.classList.remove('show');
+                        setTimeout(() => {
+                            page.classList.remove('active');
+                        }, 400); 
+                    }
+                });
 
-            setTimeout(() => {
-                targetPage.classList.add('active');
                 setTimeout(() => {
-                    targetPage.classList.add('show');
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-                }, 50);
-            }, 400); 
+                    targetPage.classList.add('active');
+                    setTimeout(() => {
+                        targetPage.classList.add('show');
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+                    }, 50);
+                }, 400); 
+            } catch (err) {
+                console.error("Помилка навігації:", err);
+            }
         }
 
         // --- ЗАХИСТ: Попередження в консолі ---
         console.log("%cУВАГА!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px 0 #000;");
         console.log("%cЦе закритий архів. Будь-які маніпуляції з кодом фіксуються системою Cyber Buster.", "color: #00f3ff; font-size: 16px;");
 
-        // --- CYBER CAT: Логіка Офлайн Гри з Анти-Чітом ---
+        // --- CYBER CAT: Логіка Офлайн Гри з Анти-Чітом та Захистом ---
         const GameEngine = (function() {
-            // Приватні змінні (Анти-Чіт)
             let _score = 0;
             let _isActive = false;
             let _animationId;
+            let _lastJumpTime = 0; // Захист від спаму стрибками
             
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
             const scoreDisplay = document.getElementById('cat-score');
 
-            // Ігрові об'єкти
             let cat = { x: 50, y: 150, width: 20, height: 20, dy: 0, isJumping: false };
             let obstacle = { x: 600, y: 150, width: 20, height: 20, speed: 5 };
             let gem = { x: 800, y: 100, active: true };
             const gravity = 0.6;
 
-            function jump() {
-                if (!cat.isJumping && _isActive) {
+            function jump(e) {
+                if (e) e.preventDefault(); // Запобігаємо скролу екрану при тапі
+                const now = Date.now();
+                // Додаємо кулдаун 300мс на стрибок, щоб не перевантажувати пам'ять спамом
+                if (!cat.isJumping && _isActive && (now - _lastJumpTime > 300)) {
                     cat.dy = -10;
                     cat.isJumping = true;
+                    _lastJumpTime = now;
                 }
             }
 
             function drawBackground() {
                 ctx.fillStyle = 'rgba(0, 50, 0, 0.2)'; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // "Матричний" дощ на тлі
                 ctx.fillStyle = '#0F0';
                 ctx.font = '10px monospace';
                 for(let i = 0; i < 5; i++) {
@@ -561,70 +653,75 @@
             function update() {
                 if (!_isActive) return;
 
-                // Фізика Кота
-                cat.y += cat.dy;
-                if (cat.y < 150) {
-                    cat.dy += gravity;
-                } else {
-                    cat.y = 150;
-                    cat.dy = 0;
-                    cat.isJumping = false;
-                }
+                try {
+                    // Фізика Кота
+                    cat.y += cat.dy;
+                    if (cat.y < 150) {
+                        cat.dy += gravity;
+                    } else {
+                        cat.y = 150;
+                        cat.dy = 0;
+                        cat.isJumping = false;
+                    }
 
-                // Перешкода (Вірус)
-                obstacle.x -= obstacle.speed;
-                if (obstacle.x < -20) {
-                    obstacle.x = 600 + Math.random() * 200;
-                    obstacle.speed += 0.1; // Адаптивна складність
-                }
+                    // Перешкода (Вірус)
+                    obstacle.x -= obstacle.speed;
+                    if (obstacle.x < -20) {
+                        obstacle.x = 600 + Math.random() * 200;
+                        obstacle.speed = Math.min(obstacle.speed + 0.1, 12); // Обмежуємо максимальну швидкість
+                    }
 
-                // Гем (Енергія)
-                gem.x -= 3;
-                if (gem.x < -10) {
-                    gem.x = 600 + Math.random() * 300;
-                    gem.active = true;
-                }
+                    // Гем (Енергія)
+                    gem.x -= 3;
+                    if (gem.x < -10) {
+                        gem.x = 600 + Math.random() * 300;
+                        gem.active = true;
+                    }
 
-                // Перевірка зіткнення з Гемом (Безпечне додавання)
-                if (gem.active && Math.abs(cat.x - gem.x) < 25 && Math.abs(cat.y - gem.y) < 25) {
-                    gem.active = false;
-                    _score += 10;
-                    scoreDisplay.innerText = _score;
-                }
+                    // Перевірка зіткнення з Гемом
+                    if (gem.active && Math.abs(cat.x - gem.x) < 25 && Math.abs(cat.y - gem.y) < 25) {
+                        gem.active = false;
+                        _score += 10;
+                        scoreDisplay.innerText = _score;
+                    }
 
-                // Перевірка зіткнення з Вірусом (Game Over)
-                if (cat.x < obstacle.x + obstacle.width && cat.x + cat.width > obstacle.x &&
-                    cat.y < obstacle.y + obstacle.height && cat.y + cat.height > obstacle.y) {
+                    // Перевірка зіткнення з Вірусом (Game Over)
+                    if (cat.x < obstacle.x + obstacle.width && cat.x + cat.width > obstacle.x &&
+                        cat.y < obstacle.y + obstacle.height && cat.y + cat.height > obstacle.y) {
+                        _isActive = false;
+                        ctx.fillStyle = "rgba(255, 0, 0, 0.7)";
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.fillStyle = "#FFF";
+                        ctx.font = "20px monospace";
+                        ctx.fillText("SYSTEM BREACH. Click to Reboot.", 120, 100);
+                        return;
+                    }
+
+                    // Малювання
+                    drawBackground();
+                    
+                    // Кіт
+                    ctx.fillStyle = '#00f3ff';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#00f3ff';
+                    ctx.fillRect(cat.x, cat.y + (Math.random() > 0.9 ? 2 : 0), cat.width, cat.height);
+                    ctx.shadowBlur = 0;
+
+                    // Вірус
+                    ctx.fillStyle = '#ff0000';
+                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+
+                    // Гем
+                    if (gem.active) {
+                        ctx.fillStyle = '#39ff14';
+                        ctx.fillRect(gem.x, gem.y, 10, 10);
+                    }
+
+                    _animationId = requestAnimationFrame(update);
+                } catch (err) {
+                    console.error("Помилка ігрового рушія:", err);
                     _isActive = false;
-                    ctx.fillStyle = "rgba(255, 0, 0, 0.7)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = "#FFF";
-                    ctx.font = "20px monospace";
-                    ctx.fillText("SYSTEM BREACH. Click to Reboot.", 120, 100);
-                    return;
                 }
-
-                // Малювання
-                drawBackground();
-                
-                // Малюємо Кота (Неоновий куб з глітчем)
-                ctx.fillStyle = '#00f3ff';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#00f3ff';
-                ctx.fillRect(cat.x, cat.y + (Math.random() > 0.9 ? 2 : 0), cat.width, cat.height);
-                ctx.shadowBlur = 0;
-
-                // Малюємо Вірус (Червоний код)
-                ctx.fillStyle = '#ff0000';
-                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-
-                // Малюємо Гем
-                if (gem.active) {
-                    ctx.fillStyle = '#39ff14';
-                    ctx.fillRect(gem.x, gem.y, 10, 10);
-                }
-
-                _animationId = requestAnimationFrame(update);
             }
 
             function resetGame() {
@@ -641,7 +738,7 @@
 
             // Управління
             window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
-            canvas.addEventListener('touchstart', jump);
+            canvas.addEventListener('touchstart', jump, {passive: false});
             canvas.addEventListener('click', () => { if(!_isActive) resetGame(); });
 
             return {
