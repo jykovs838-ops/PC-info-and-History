@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jykovs838-ops.github.io/PC-info-and-History/sitemap.xml
