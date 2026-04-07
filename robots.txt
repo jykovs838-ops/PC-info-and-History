@@ -1,4 +1,12 @@
+# Створено спеціально для Cyber Cat UA
+# Навігатор для Googlebot та інших пошукових систем
+
 User-agent: *
 Allow: /
 
-Sitemap: https://jykovs838-ops.github.io/PC-info-and-History/sitemap.xml
+# Шлях до головного репозиторію та твоїх сторінок
+Sitemap: https://jykovs838-ops.github.io/CyberBuster/sitemap.xml
+
+# Забороняємо індексувати лише системні папки (якщо вони у тебе є)
+Disallow: /private/
+Disallow: /config/
