@@ -134,6 +134,17 @@
             font-size: 1.1em;
         }
 
+        /* Анімація статусу пульсації */
+        @keyframes pulse-green {
+            0% { text-shadow: 0 0 5px var(--neon-green); }
+            50% { text-shadow: 0 0 20px var(--neon-green), 0 0 30px var(--neon-green); }
+            100% { text-shadow: 0 0 5px var(--neon-green); }
+        }
+        .status-online {
+            color: var(--neon-green);
+            animation: pulse-green 2s infinite;
+        }
+
         /* Кнопки соцмереж */
         .project-links {
             display: flex;
@@ -208,7 +219,7 @@
             transform: translateY(-5px);
         }
 
-        /* Кібер-таблиця */
+        /* Кібер-таблиця та кастомний скрол */
         .table-responsive {
             overflow-x: auto;
             margin: 30px 0;
@@ -218,11 +229,17 @@
             background: rgba(20, 20, 30, 0.6);
         }
 
+        /* Стилізація скролбарів (вебкіт) */
+        ::-webkit-scrollbar { height: 8px; width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-purple); }
+
         .cyber-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            min-width: 600px; /* Щоб на мобільному був скрол, а не здавлювання */
+            min-width: 600px;
         }
 
         .cyber-table th, .cyber-table td {
@@ -238,18 +255,9 @@
             text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
         }
 
-        .cyber-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .cyber-table tr:hover {
-            background: rgba(0, 243, 255, 0.05);
-        }
-
-        .highlight-cell {
-            color: var(--neon-pink);
-            font-weight: bold;
-        }
+        .cyber-table tr:last-child td { border-bottom: none; }
+        .cyber-table tr:hover { background: rgba(0, 243, 255, 0.05); }
+        .highlight-cell { color: var(--neon-pink); font-weight: bold; }
 
         ul { margin-left: 20px; margin-bottom: 15px; }
         li { margin-bottom: 8px; }
@@ -279,20 +287,13 @@
             text-transform: uppercase;
         }
 
-        /* =========================================
-           МОБІЛЬНА АДАПТАЦІЯ (Чуйний дизайн)
-           ========================================= */
+        /* МОБІЛЬНА АДАПТАЦІЯ */
         @media (max-width: 768px) {
             nav {
                 justify-content: flex-start;
                 overflow-x: auto;
                 padding: 15px 10px;
                 -webkit-overflow-scrolling: touch;
-            }
-            nav::-webkit-scrollbar { height: 4px; }
-            nav::-webkit-scrollbar-thumb {
-                background: var(--neon-cyan);
-                border-radius: 10px;
             }
             .nav-btn { padding: 8px 15px; font-size: 0.9em; }
             h1 { font-size: 1.8em; margin-bottom: 20px; }
@@ -305,9 +306,7 @@
             .card { padding: 20px; }
         }
 
-        /* =========================================
-           СТИЛІ ОФЛАЙН ЕКРАНУ (CYBER CAT)
-           ========================================= */
+        /* СТИЛІ ОФЛАЙН ЕКРАНУ (CYBER CAT) */
         #offline-screen {
             display: none;
             position: fixed;
@@ -349,7 +348,7 @@
             <h1>PC-info-and-History</h1>
             <div class="cyber-line"></div>
             <p>Вітаємо в найбільш детальному архіві комп'ютерних технологій. Цей термінал містить засекречену та відкриту інформацію про еволюцію обчислювальних машин: від перших лампових монстрів до сучасних квантових архітектур та штучного інтелекту.</p>
-            <p><strong>Статус системи:</strong> <span style="color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green);">ОНЛАЙН, ЗАХИСТ АКТИВОВАНО, АДАПТОВАНО ПІД МОБІЛЬНІ ПРИСТРОЇ</span></p>
+            <p><strong>Статус системи:</strong> <span class="status-online">ОНЛАЙН, ЗАХИСТ АКТИВОВАНО, АДАПТОВАНО ПІД МОБІЛЬНІ ПРИСТРОЇ</span></p>
             
             <div class="project-links">
                 <a href="https://www.youtube.com/@CyberCatUA" target="_blank" rel="noopener noreferrer" class="btn-yt">
@@ -572,38 +571,36 @@
         window.addEventListener('error', function(e) {
             console.log("%c[СИСТЕМНА АНОМАЛІЯ ПЕРЕХОПЛЕНА]", "color: #ff0000; font-weight: bold; background: #000; padding: 5px;");
             console.log("%cПомилка: " + e.message, "color: #00f3ff;");
-            // Повертаємо true, щоб запобігти стандартній поведінці браузера (зависанню)
             return true;
         });
 
-        // --- Логіка перемикання сторінок ---
+        // --- Логіка перемикання сторінок (Оптимізована від багів) ---
         function showPage(pageId) {
             try {
-                const pages = document.querySelectorAll('.page');
-                const btns = document.querySelectorAll('.nav-btn');
                 const targetPage = document.getElementById(pageId);
+                if (!targetPage || targetPage.classList.contains('show')) return;
 
-                if (targetPage.classList.contains('show')) return;
-
+                const btns = document.querySelectorAll('.nav-btn');
                 btns.forEach(btn => btn.classList.remove('active'));
                 document.querySelector(`button[onclick="showPage('${pageId}')"]`).classList.add('active');
 
-                pages.forEach(page => {
-                    if (page.classList.contains('show')) {
-                        page.classList.remove('show');
-                        setTimeout(() => {
-                            page.classList.remove('active');
-                        }, 400); 
-                    }
-                });
-
-                setTimeout(() => {
-                    targetPage.classList.add('active');
+                const currentPage = document.querySelector('.page.show');
+                
+                if (currentPage) {
+                    currentPage.classList.remove('show');
                     setTimeout(() => {
-                        targetPage.classList.add('show');
-                        window.scrollTo({ top: 0, behavior: 'smooth' }); 
-                    }, 50);
-                }, 400); 
+                        currentPage.classList.remove('active');
+                        targetPage.classList.add('active');
+                        // Невеличка затримка перед анімацією появи
+                        setTimeout(() => {
+                            targetPage.classList.add('show');
+                            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+                        }, 50);
+                    }, 400); // 400ms відповідає часу CSS-транзиції
+                } else {
+                    targetPage.classList.add('active');
+                    setTimeout(() => targetPage.classList.add('show'), 50);
+                }
             } catch (err) {
                 console.error("Помилка навігації:", err);
             }
@@ -618,7 +615,7 @@
             let _score = 0;
             let _isActive = false;
             let _animationId;
-            let _lastJumpTime = 0; // Захист від спаму стрибками
+            let _lastJumpTime = 0;
             
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
@@ -630,9 +627,8 @@
             const gravity = 0.6;
 
             function jump(e) {
-                if (e) e.preventDefault(); // Запобігаємо скролу екрану при тапі
+                if (e && e.type !== 'keydown') e.preventDefault(); 
                 const now = Date.now();
-                // Додаємо кулдаун 300мс на стрибок, щоб не перевантажувати пам'ять спамом
                 if (!cat.isJumping && _isActive && (now - _lastJumpTime > 300)) {
                     cat.dy = -10;
                     cat.isJumping = true;
@@ -641,7 +637,7 @@
             }
 
             function drawBackground() {
-                ctx.fillStyle = 'rgba(0, 50, 0, 0.2)'; 
+                ctx.fillStyle = 'rgba(0, 50, 0, 0.2)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = '#0F0';
                 ctx.font = '10px monospace';
@@ -652,7 +648,6 @@
 
             function update() {
                 if (!_isActive) return;
-
                 try {
                     // Фізика Кота
                     cat.y += cat.dy;
@@ -668,7 +663,7 @@
                     obstacle.x -= obstacle.speed;
                     if (obstacle.x < -20) {
                         obstacle.x = 600 + Math.random() * 200;
-                        obstacle.speed = Math.min(obstacle.speed + 0.1, 12); // Обмежуємо максимальну швидкість
+                        obstacle.speed = Math.min(obstacle.speed + 0.1, 12);
                     }
 
                     // Гем (Енергія)
@@ -699,7 +694,6 @@
 
                     // Малювання
                     drawBackground();
-                    
                     // Кіт
                     ctx.fillStyle = '#00f3ff';
                     ctx.shadowBlur = 10;
@@ -736,14 +730,25 @@
                 update();
             }
 
-            // Управління
-            window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
+            // Управління: Передаємо (e), щоб уникнути прокрутки сторінки пробілом
+            window.addEventListener('keydown', (e) => { 
+                if(e.code === 'Space') {
+                    e.preventDefault();
+                    jump(e); 
+                }
+            });
             canvas.addEventListener('touchstart', jump, {passive: false});
             canvas.addEventListener('click', () => { if(!_isActive) resetGame(); });
-
+            
             return {
-                start: () => { document.getElementById('offline-screen').style.display = 'flex'; resetGame(); },
-                stop: () => { document.getElementById('offline-screen').style.display = 'none'; _isActive = false; }
+                start: () => { 
+                    document.getElementById('offline-screen').style.display = 'flex';
+                    resetGame(); 
+                },
+                stop: () => { 
+                    document.getElementById('offline-screen').style.display = 'none';
+                    _isActive = false; 
+                }
             };
         })();
 
@@ -751,7 +756,7 @@
         window.addEventListener('offline', GameEngine.start);
         window.addEventListener('online', GameEngine.stop);
 
-        // Якщо завантажили сайт і одразу немає інтернету (кеш)
+        // Якщо завантажили сайт і одразу немає інтернету
         if (!navigator.onLine) {
             GameEngine.start();
         }
